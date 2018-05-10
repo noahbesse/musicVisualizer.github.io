@@ -3,14 +3,17 @@
 // May the fourth be with you, 2018
 let state;
 let musicFile;
-let dropZone = rect(windowWidth/2,windowHeight/2,200,200);
+let testSong1;
+let testSong2;
 stroke(2);
 
 function setup(){
   state = "warning";
   createCanvas(windowWidth,windowHeight);
 }
-
+function preload(){
+  testSong1 = loadSound("assets/testSong1.wav");
+}
 function draw(){
   background(0);
   stateScreens();
@@ -29,31 +32,24 @@ function stateScreens(){
     }
   }
   if (state === 1 /*Welcome Screen*/){
+    let rectWidth = windowWidth/8;
+    let rectLength = windowHeight/16;
+    background(0);
     fill(0, 255, 0);
     textAlign(CENTER);
     textFont("Agency FB");
     textSize(windowWidth/25);
     text("Welcome to Noah's Music Visualizer",windowWidth/2,windowHeight/4);
     rectMode(CENTER);
-    rect(windowWidth/2,windowHeight/2,windowWidth/8,windowHeight/16);
     textSize(windowWidth/35);
-    fill(0);
-    text("U P L O A D",windowWidth/2,windowHeight/1.9);
-    fill(0,255,0);
-    if (mouseX >= windowWidth/16+windowWidth/2 || mouseX <= windowWidth/16-windowWidth/2){
+    text("UPLOAD",windowWidth/2,windowHeight/1.9);
+    text("USE PRESET SONGS",windowWidth/2,windowHeight/1.5);
+    if (mouseX >= windowWidth/2+windowWidth/8 || mouseX <= windowWidth/2-windowWidth/8 ){
       state = 2;
     }
   }
   if (state === 2/*Upload Screen*/){
-    dropZone.drop(gotFile);
-  }
-}
+    background(0);
 
-function gotFile(file){
-  if (file.type === "wav" || file.type === "mp3"){
-    musicFile = loadSound(file);
-  }
-  else{
-    text("Thats not a wav file",windowWidth/2,windowHeight/2);
   }
 }
