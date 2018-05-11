@@ -4,7 +4,7 @@
 let state;
 let musicFile;
 let testSong1;
-let testSong2;
+let testSong1Thumbnail;
 stroke(2);
 
 function setup(){
@@ -13,6 +13,7 @@ function setup(){
 }
 function preload(){
   testSong1 = loadSound("assets/testSong1.wav");
+  testSong1Thumbnail = loadSound("assets/5hoursThumbnail.jpg");
 }
 function draw(){
   background(0);
@@ -42,13 +43,15 @@ function stateScreens(){
     text("Welcome to Noah's Music Visualizer",windowWidth/2,windowHeight/4);
     rectMode(CENTER);
     textSize(windowWidth/35);
-    text("UPLOAD",windowWidth/2,windowHeight/1.9);
-    text("USE PRESET SONGS",windowWidth/2,windowHeight/1.5);
-    if (mouseX >= windowWidth/2+windowWidth/8 || mouseX <= windowWidth/2-windowWidth/8 ){
-      state = 2;
+    text("UPLOAD",windowWidth/2,windowHeight/1.5);
+    text("USE PRESET SONGS",windowWidth/2,windowHeight/1.9);
+    if (mouseX >= windowWidth/25 || mouseX <= windowWidth/25 ){
+      if (mouseIsPressed){
+        state = 2;
+      }
     }
   }
-  if (state === 2/*Upload Screen*/){
+  if (state === 2/*Preset Songs*/){
     background(0);
 
   }
