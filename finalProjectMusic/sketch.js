@@ -5,7 +5,6 @@ let state;
 let musicFile;
 let testSong1;
 let testSong1Thumbnail;
-stroke(2);
 
 function setup(){
   state = "warning";
@@ -13,7 +12,7 @@ function setup(){
 }
 function preload(){
   testSong1 = loadSound("assets/testSong1.wav");
-  testSong1Thumbnail = loadSound("assets/5hoursThumbnail.jpg");
+  testSong1Thumbnail = loadImage("assets/5hoursThumbnail.jpg");
 }
 function draw(){
   background(0);
@@ -45,14 +44,14 @@ function stateScreens(){
     textSize(windowWidth/35);
     text("UPLOAD",windowWidth/2,windowHeight/1.5);
     text("USE PRESET SONGS",windowWidth/2,windowHeight/1.9);
-    if (mouseX >= windowWidth/25 || mouseX <= windowWidth/25 ){
-      if (mouseIsPressed){
-        state = 2;
+    // if (mouseX >= windowWidth/25 || mouseX <= windowWidth/25 ){
+    //   if (mouseIsPressed){
+    //     state = 2;
       }
     }
-  }
+  //}
   if (state === 2/*Preset Songs*/){
     background(0);
 
   }
-}
+//}
