@@ -30,9 +30,10 @@ function stateScreens(){
     textSize(30);
     text("L O O K S  B E S T  I N   F U L L S C R E E N ",400,windowHeight/2);
     text("C L I C K  T O  C O N T I N U E",400,windowHeight/1.5);
-    if (mouseIsPressed){
+    if (mouseIsPressed && state === "warning"){
       backgroundMusic.play();
       backgroundMusic.amp(1);
+      backgroundMusic.loop();
       state = 1;
     }
   }
@@ -56,6 +57,7 @@ function stateScreens(){
   }
   if (state === 2/*Preset Songs*/){
     background(0);
+    image(testSong1Thumbnail,0,200,150,150);
 
   }
 }
