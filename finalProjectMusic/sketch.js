@@ -4,8 +4,10 @@
 let state;
 let musicFile;
 let testSong1;
-let testSong1Thumbnail;
+let testSong1Thumbnail, testSong2Thumbnail;
 let backgroundMusic;
+let testSong2;
+
 function setup(){
   state = "warning";
   let canvas = createCanvas(800, 800);
@@ -15,6 +17,8 @@ function preload(){
   testSong1 = loadSound("assets/testSong1.wav");
   testSong1Thumbnail = loadImage("assets/5hoursThumbnail.jpg");
   backgroundMusic = loadSound("assets/beginningbackgroundMusic.wav");
+  testSong2 = loadSound("assets/nevergonnadoittoem.mp3");
+  testSong2Thumbnail = loadImage("assets/fatherRick.png");
 }
 function draw(){
   background(0);
@@ -57,7 +61,25 @@ function stateScreens(){
   }
   if (state === 2/*Preset Songs*/){
     background(0);
+    textAlign(LEFT);
+    textSize(20);
+    text("Five Hours - Deorro",0,400);
+    text("Never Gonna Give You Up - Rick Astley",200,400);
     image(testSong1Thumbnail,0,200,150,150);
-
+    image(testSong2Thumbnail,250,200,150,150);
+    if (mouseY <= 350 && mouseY >= 200 && mouseIsPressed){
+      if (mouseX >= 0 && mouseX <= 150){
+        state = 3.1/*Five Hours - Deorro*/;
+      }
+      if (mouseX >= 250 && mouseX <= 400){
+        state = 3.2/*Rick Roll*/;
+      }
+    }
   }
+  // if (state === 3.1){
+  //
+  // }
+}
+function Visualizer(){
+  
 }
