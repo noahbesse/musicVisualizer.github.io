@@ -75,11 +75,27 @@ function stateScreens(){
         state = 3.2/*Rick Roll*/;
       }
     }
+    if (state === 3.1/*Five Hours*/){
+      background(0);
+      textAlign(LEFT);
+      textSize(20);
+    }
+    if (state === 3.2/*Never gonna give you up*/){
+      background(0);
+      textAlign(LEFT);
+      textSize(20);
+    }
   }
   // if (state === 3.1){
   //
   // }
 }
-function Visualizer(){
-  
+function Visualizer(song){
+  setInput(song);
+  waveform(1024);
+  let songAnalyze = analyze();
+  for (let i = 0; i < songAnalyze.length; i++){
+
+  }
+
 }
