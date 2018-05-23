@@ -7,8 +7,11 @@ let testSong1;
 let testSong1Thumbnail, testSong2Thumbnail;
 let backgroundMusic;
 let testSong2;
+let ampSlider;
+let volumeOfSong, volumeSliderMade;
 
 function setup(){
+  volumeSliderMade = false;
   state = "warning";
   let canvas = createCanvas(800, 800);
   canvas.position(windowWidth/4, 0);
@@ -69,33 +72,41 @@ function stateScreens(){
     image(testSong2Thumbnail,250,200,150,150);
     if (mouseY <= 350 && mouseY >= 200 && mouseIsPressed){
       if (mouseX >= 0 && mouseX <= 150){
-        state = 3.1/*Five Hours - Deorro*/;
+        backgroundMusic.amp(0);
+        state = 3/*Five Hours - Deorro*/;
       }
       if (mouseX >= 250 && mouseX <= 400){
-        state = 3.2/*Rick Roll*/;
+        backgroundMusic.amp(0);
+        state = 4/*Rick Roll*/;
+
       }
     }
-    if (state === 3.1/*Five Hours*/){
-      background(0);
-      textAlign(LEFT);
-      textSize(20);
-    }
-    if (state === 3.2/*Never gonna give you up*/){
-      background(0);
-      textAlign(LEFT);
-      textSize(20);
-    }
   }
-  // if (state === 3.1){
-  //
-  // }
+  if (state === 3/*Five Hours*/){
+    Visualizer(testSong1);
+    volumeSlider();
+    volumeSliderMade = true;
+  }
+  if (state === 4/*Never gonna give you up*/){
+    Visualizer(testSong2);
+    volumeSlider();
+    volumeSliderMade = true;
+  }
+
 }
 function Visualizer(song){
-  setInput(song);
-  waveform(1024);
-  let songAnalyze = analyze();
-  for (let i = 0; i < songAnalyze.length; i++){
-
+  background(0);
+  textAlign(LEFT);
+  textSize(20);
+  fill(204, 255, 204);
+  ellipse(200,600,50);
+  fill(50);
+  triangle(200,600,650,250,600,700);
+}
+function volumeSlider(){
+  if (volumeSliderMade === false){
+    ampSlider = createSlider(0,1,0.3,0);
+    ampSlider.position(700,600);
   }
-
+  volumeOfSong = ampSlider.value();
 }
