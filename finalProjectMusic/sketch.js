@@ -1,7 +1,7 @@
 // Music Visualizer
 // Noah Besse
 // May the fourth be with you, 2018
-let state;
+let state, semiState;
 let musicFile;
 let testSong1;
 let testSong1Thumbnail, testSong2Thumbnail;
@@ -11,6 +11,7 @@ let ampSlider;
 let volumeOfSong, volumeSliderMade;
 
 function setup(){
+  semiState = 1;
   volumeSliderMade = false;
   state = "warning";
   let canvas = createCanvas(800, 800);
@@ -92,21 +93,44 @@ function stateScreens(){
     volumeSlider();
     volumeSliderMade = true;
   }
+}
 
-}
 function Visualizer(song){
-  background(0);
-  textAlign(LEFT);
-  textSize(20);
-  fill(204, 255, 204);
-  ellipse(200,600,50);
-  fill(50);
-  triangle(200,600,650,250,600,700);
+  if (semiState === 1){
+    background(0);
+    textAlign(LEFT);
+    textSize(20);
+    fill(204, 255, 204);
+    ellipse(200,600,50);
+    fill(50);
+    triangle(187.5,583.3,220,600,187.5,616.7);
+  }
+  if (semiState === 2){
+    fill(102, 255, 102);
+    ellipse(200,600,50);
+    fill(50);
+    rectMode(CENTER);
+    rect(200,600,25,25);
+  }
 }
+
 function volumeSlider(){
   if (volumeSliderMade === false){
     ampSlider = createSlider(0,1,0.3,0);
     ampSlider.position(700,600);
   }
   volumeOfSong = ampSlider.value();
+}
+
+function mouseClicked(){
+  if (semiState === 1 && (state === 3 || state === 4)){
+    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625 &&){
+      semiState = 2;
+    }
+  }
+  if (semiState === 2 && (state === 3 || state === 4)){
+    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625){
+      semiState = 1;
+    }
+  }
 }
