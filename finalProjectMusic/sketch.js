@@ -3,12 +3,11 @@
 // May the fourth be with you, 2018
 let state, semiState;
 let musicFile;
-let testSong1;
-let testSong1Thumbnail, testSong2Thumbnail;
+let testSong1, testSong2, testSong3;
+let testSong1Thumbnail, testSong2Thumbnail, testSong3Thumbnail;
 let backgroundMusic;
-let testSong2;
 let ampSlider;
-let volumeOfSong, volumeSliderMade;
+let volumeOfSong, volumeSliderMade, songPlaying;
 
 function setup(){
   semiState = 1;
@@ -23,6 +22,8 @@ function preload(){
   backgroundMusic = loadSound("assets/beginningbackgroundMusic.wav");
   testSong2 = loadSound("assets/nevergonnadoittoem.mp3");
   testSong2Thumbnail = loadImage("assets/fatherRick.png");
+  testSong3 = loadSound("assets/oceanman.mp3");
+  testSong3Thumbnail = loadImage("assets/hqdefault.jpg");
 }
 function draw(){
   background(0);
@@ -40,7 +41,7 @@ function stateScreens(){
     text("C L I C K  T O  C O N T I N U E",400,windowHeight/1.5);
     if (mouseIsPressed && state === "warning"){
       backgroundMusic.play();
-      backgroundMusic.amp(1);
+      backgroundMusic.amp(0.5);
       backgroundMusic.loop();
       state = 1;
     }
@@ -69,8 +70,10 @@ function stateScreens(){
     textSize(20);
     text("Five Hours - Deorro",0,400);
     text("Never Gonna Give You Up - Rick Astley",200,400);
+    text("Ocean Man - Ween",525,400);
     image(testSong1Thumbnail,0,200,150,150);
     image(testSong2Thumbnail,250,200,150,150);
+    image(testSong3Thumbnail,500,200,150,150);
     if (mouseY <= 350 && mouseY >= 200 && mouseIsPressed){
       if (mouseX >= 0 && mouseX <= 150){
         backgroundMusic.amp(0);
@@ -79,6 +82,11 @@ function stateScreens(){
       if (mouseX >= 250 && mouseX <= 400){
         backgroundMusic.amp(0);
         state = 4/*Rick Roll*/;
+
+      }
+      if (mouseX >= 500 && mouseX <= 650){
+        backgroundMusic.amp(0);
+        state = 5/*OCEAN MAN, TAKE ME BY THE HAND, LEAD ME TO THE LAND*/;
 
       }
     }
@@ -93,9 +101,15 @@ function stateScreens(){
     volumeSlider();
     volumeSliderMade = true;
   }
+  if (state === 5/*Never gonna give you up*/){
+    Visualizer(testSong3);
+    volumeSlider();
+    volumeSliderMade = true;
+  }
 }
 
 function Visualizer(song){
+  song.amp(volumeOfSong);
   if (semiState === 1){
     background(0);
     textAlign(LEFT);
@@ -104,6 +118,7 @@ function Visualizer(song){
     ellipse(200,600,50);
     fill(50);
     triangle(187.5,583.3,220,600,187.5,616.7);
+
   }
   if (semiState === 2){
     fill(102, 255, 102);
@@ -111,6 +126,64 @@ function Visualizer(song){
     fill(50);
     rectMode(CENTER);
     rect(200,600,25,25);
+
+  }
+}
+
+function mousePressed(){
+  if (state === 3){
+    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625){
+
+
+      if (semiState === 2){
+        semiState = 1;
+        testSong1.pause();
+        songPlaying = false;
+        return false;
+      }
+      if (semiState === 1){
+        semiState = 2;
+        testSong1.play();
+        songPlaying = true;
+        return false;
+      }
+    }
+  }
+  if (state === 4){
+    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625){
+
+
+      if (semiState === 2){
+        semiState = 1;
+        testSong2.pause();
+        songPlaying = false;
+        return false;
+      }
+      if (semiState === 1){
+        semiState = 2;
+        testSong2.play();
+        songPlaying = true;
+        return false;
+      }
+    }
+  }
+  if (state === 5){
+    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625){
+
+
+      if (semiState === 2){
+        semiState = 1;
+        testSong3.pause();
+        songPlaying = false;
+        return false;
+      }
+      if (semiState === 1){
+        semiState = 2;
+        testSong3.play();
+        songPlaying = true;
+        return false;
+      }
+    }
   }
 }
 
@@ -120,17 +193,4 @@ function volumeSlider(){
     ampSlider.position(700,600);
   }
   volumeOfSong = ampSlider.value();
-}
-
-function mouseClicked(){
-  if (semiState === 1 && (state === 3 || state === 4)){
-    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625 &&){
-      semiState = 2;
-    }
-  }
-  if (semiState === 2 && (state === 3 || state === 4)){
-    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625){
-      semiState = 1;
-    }
-  }
 }
