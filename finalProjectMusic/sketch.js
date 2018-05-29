@@ -40,9 +40,6 @@ function stateScreens(){
     text("L O O K S  B E S T  I N   F U L L S C R E E N ",400,windowHeight/2);
     text("C L I C K  T O  C O N T I N U E",400,windowHeight/1.5);
     if (mouseIsPressed && state === "warning"){
-      backgroundMusic.play();
-      backgroundMusic.amp(0.5);
-      backgroundMusic.loop();
       state = 1;
     }
   }
@@ -121,12 +118,15 @@ function Visualizer(song){
 
   }
   if (semiState === 2){
+    let songPeaks = song.getPeaks(8000);
     fill(102, 255, 102);
     ellipse(200,600,50);
     fill(50);
     rectMode(CENTER);
     rect(200,600,25,25);
-
+    // for (let i = 0; i < songPeaks.length;i++){
+    //
+    // }
   }
 }
 
@@ -179,6 +179,7 @@ function mousePressed(){
       }
       if (semiState === 1){
         semiState = 2;
+
         testSong3.play();
         songPlaying = true;
         return false;
