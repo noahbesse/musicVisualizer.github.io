@@ -1,4 +1,4 @@
-// Music Visualizer
+// Music playAudio
 // Noah Besse
 // May the fourth be with you, 2018
 let state, semiState;
@@ -8,8 +8,11 @@ let testSong1Thumbnail, testSong2Thumbnail, testSong3Thumbnail;
 let backgroundMusic;
 let ampSlider;
 let volumeOfSong, volumeSliderMade, songPlaying;
+let fft;
+let spectrum;
 
 function setup(){
+  fft = new p5.FFT();
   semiState = 1;
   volumeSliderMade = false;
   state = "warning";
@@ -49,7 +52,7 @@ function stateScreens(){
     textAlign(CENTER);
     textFont("Agency FB");
     textSize(60);
-    text("Welcome to Noah's Music Visualizer",400,200);
+    text("Welcome to Noah's Music playAudio",400,200);
     rectMode(CENTER);
     textSize(30);
 
@@ -89,45 +92,54 @@ function stateScreens(){
     }
   }
   if (state === 3/*Five Hours*/){
-    Visualizer(testSong1);
+    playAudio(testSong1);
     volumeSlider();
     volumeSliderMade = true;
   }
   if (state === 4/*Never gonna give you up*/){
-    Visualizer(testSong2);
+    playAudio(testSong2);
     volumeSlider();
     volumeSliderMade = true;
   }
   if (state === 5/*Never gonna give you up*/){
-    Visualizer(testSong3);
+    playAudio(testSong3);
     volumeSlider();
     volumeSliderMade = true;
   }
 }
 
-function Visualizer(song){
+function playAudio(song){
   song.amp(volumeOfSong);
   if (semiState === 1){
     background(0);
     textAlign(LEFT);
     textSize(20);
-    fill(204, 255, 204);
+    fill(0, 255, 0);
     ellipse(200,600,50);
     fill(50);
     triangle(187.5,583.3,220,600,187.5,616.7);
 
   }
   if (semiState === 2){
-    let songPeaks = song.getPeaks(8000);
-    fill(102, 255, 102);
+    fill(0, 255, 0);
     ellipse(200,600,50);
     fill(50);
     rectMode(CENTER);
     rect(200,600,25,25);
-    // for (let i = 0; i < songPeaks.length;i++){
-    //
-    // }
+    visualize(song);
   }
+}
+
+function visualize(song){
+
+  spectrum = fft.analyze();
+  for (let i = 0; i < spectrum.length; i++){
+    let amp = spectrum[i];
+    let y = map(amp,0,256,height-400,0);
+    stroke(0,255,0);
+    line(i,height-400,i,y);
+  }
+
 }
 
 function mousePressed(){
