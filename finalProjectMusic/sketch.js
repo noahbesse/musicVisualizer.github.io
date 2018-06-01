@@ -137,9 +137,9 @@ function visualize(song){
     let amp = spectrum[i];
     let y = map(amp,0,256,height-400,0);
     stroke(0,255,0);
-    line(i,height-400,i,y);
+    line(i + 395,height-400,i+395,y);
+    line(405 - i,height-400,405 - i,y);
   }
-
 }
 
 function mousePressed(){
