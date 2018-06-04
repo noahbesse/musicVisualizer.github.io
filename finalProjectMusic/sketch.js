@@ -1,22 +1,25 @@
 // Music playAudio
 // Noah Besse
 // May the fourth be with you, 2018
+//thanks to tony for the upload scripts
 let state, semiState;
 let musicFile;
 let testSong1, testSong2, testSong3;
 let testSong1Thumbnail, testSong2Thumbnail, testSong3Thumbnail;
 let backgroundMusic;
 let ampSlider;
-let volumeOfSong, volumeSliderMade, songPlaying;
+let volumeOfSong, volumeSliderMade, songPlaying, uploadedSong;
 let fft;
 let spectrum;
-
+let canvas, canvasIsCreated;
+let rValue, gValue, bValue;
 function setup(){
+  canvasIsCreated = true;
   fft = new p5.FFT();
   semiState = 1;
   volumeSliderMade = false;
   state = "warning";
-  let canvas = createCanvas(800, 800);
+  canvas = createCanvas(800, 800);
   canvas.position(windowWidth/4, 0);
 }
 function preload(){
@@ -28,13 +31,13 @@ function preload(){
   testSong3 = loadSound("assets/oceanman.mp3");
   testSong3Thumbnail = loadImage("assets/hqdefault.jpg");
 }
+
 function draw(){
   background(0);
   stateScreens();
 }
 
 function stateScreens(){
-
   if (state === "warning"){
     background(0);
     textAlign(CENTER);
@@ -52,7 +55,7 @@ function stateScreens(){
     textAlign(CENTER);
     textFont("Agency FB");
     textSize(60);
-    text("Welcome to Noah's Music playAudio",400,200);
+    text("Welcome to Noah's Music Visualizer",400,200);
     rectMode(CENTER);
     textSize(30);
 
@@ -61,6 +64,12 @@ function stateScreens(){
     if (mouseX <= 400+77.5 && mouseX >= 400-77.5 && mouseY <=487+12.5 && mouseY >= 487-12.5){
       if (mouseIsPressed){
         state = 2;
+      }
+    }
+    text("UPLOAD",400,600);
+    if (mouseX <= 400+77.5 && mouseX >= 400-77.5 && mouseY <=587+12.5 && mouseY >= 587-12.5){
+      if (mouseIsPressed){
+        state = 6;
       }
     }
   }
@@ -101,10 +110,34 @@ function stateScreens(){
     volumeSlider();
     volumeSliderMade = true;
   }
-  if (state === 5/*Never gonna give you up*/){
+  if (state === 5/*ocean man*/){
     playAudio(testSong3);
     volumeSlider();
     volumeSliderMade = true;
+  }
+  if (state === 6/*upload songs*/){
+    canvas.drop(dropFile);
+    textAlign(CENTER);
+    fill(0,255,0);
+    textSize(30);
+    textFont("Agency FB");
+    text("Drag in a file to upload",400,400);
+
+  }
+  if (state === 7 /*uploaded song visualizer*/) {
+    playAudio(uploadedSong);
+    volumeSlider();
+    volumeSliderMade = true;
+  }
+}
+
+function dropFile(file){
+  if (file.type === "audio"){
+    uploadedSong = loadSound(file.data);
+    state = 7;
+  }
+  else{
+    print("That is not an audio file!");
   }
 }
 
@@ -137,8 +170,8 @@ function visualize(song){
     let amp = spectrum[i];
     let y = map(amp,0,256,height-400,0);
     stroke(0,255,0);
-    line(i + 395,height-400,i+395,y);
-    line(405 - i,height-400,405 - i,y);
+    line(i + 393,height-400,i+393,y);
+    line(407 - i,height-400,407 - i,y);
   }
 }
 
@@ -193,6 +226,25 @@ function mousePressed(){
         semiState = 2;
 
         testSong3.play();
+        songPlaying = true;
+        return false;
+      }
+    }
+  }
+  if (state === 7){
+    if (mouseX >= 175 && mouseX <= 225 && mouseY >= 575 && mouseY <= 625){
+
+
+      if (semiState === 2){
+        semiState = 1;
+        uploadedSong.pause();
+        songPlaying = false;
+        return false;
+      }
+      if (semiState === 1){
+        semiState = 2;
+
+        uploadedSong.play();
         songPlaying = true;
         return false;
       }
