@@ -14,11 +14,14 @@ let spectrum;
 let canvas, canvasIsCreated;
 let rValue, gValue, bValue;
 function setup(){
+  rValue = random(255);
+  gValue = random(255);
+  bValue = random(255);
   canvasIsCreated = true;
   fft = new p5.FFT();
   semiState = 1;
   volumeSliderMade = false;
-  state = "warning";
+  state = 1;
   canvas = createCanvas(800, 800);
   canvas.position(windowWidth/4, 0);
 }
@@ -38,20 +41,9 @@ function draw(){
 }
 
 function stateScreens(){
-  if (state === "warning"){
-    background(0);
-    textAlign(CENTER);
-    fill(0,255,0);
-    textSize(30);
-    text("L O O K S  B E S T  I N   F U L L S C R E E N ",400,windowHeight/2);
-    text("C L I C K  T O  C O N T I N U E",400,windowHeight/1.5);
-    if (mouseIsPressed && state === "warning"){
-      state = 1;
-    }
-  }
   if (state === 1 /*Welcome Screen*/){
     background(0);
-    fill(0, 255, 0);
+    fill(rValue,gValue,bValue);
     textAlign(CENTER);
     textFont("Agency FB");
     textSize(60);
@@ -143,23 +135,25 @@ function dropFile(file){
 
 function playAudio(song){
   song.amp(volumeOfSong);
+
   if (semiState === 1){
     background(0);
     textAlign(LEFT);
     textSize(20);
-    fill(0, 255, 0);
+    fill(rValue,gValue,bValue);
     ellipse(200,600,50);
     fill(50);
     triangle(187.5,583.3,220,600,187.5,616.7);
 
   }
   if (semiState === 2){
-    fill(0, 255, 0);
+    fill(rValue,gValue,bValue);
     ellipse(200,600,50);
     fill(50);
     rectMode(CENTER);
     rect(200,600,25,25);
     visualize(song);
+
   }
 }
 
@@ -169,9 +163,9 @@ function visualize(song){
   for (let i = 0; i < spectrum.length; i++){
     let amp = spectrum[i];
     let y = map(amp,0,256,height-400,0);
-    stroke(0,255,0);
-    line(i + 393,height-400,i+393,y);
-    line(407 - i,height-400,407 - i,y);
+    stroke(rValue,gValue,bValue);
+    line(i + 397,height-400,i+397,y);
+    line(403 - i,height-400,403 - i,y);
   }
 }
 
@@ -258,4 +252,8 @@ function volumeSlider(){
     ampSlider.position(700,600);
   }
   volumeOfSong = ampSlider.value();
+}
+
+function reloadProgram(){
+  window.location.reload(true);
 }
