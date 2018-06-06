@@ -110,7 +110,7 @@ function stateScreens(){
   if (state === 6/*upload songs*/){
     canvas.drop(dropFile);
     textAlign(CENTER);
-    fill(0,255,0);
+    fill(rValue,gValue,bValue);
     textSize(30);
     textFont("Agency FB");
     text("Drag in a file to upload",400,400);
@@ -252,6 +252,10 @@ function volumeSlider(){
     ampSlider.position(700,600);
   }
   volumeOfSong = ampSlider.value();
+}
+
+function colorSliders(){
+  
 }
 
 function reloadProgram(){
