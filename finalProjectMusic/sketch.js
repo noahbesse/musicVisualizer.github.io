@@ -16,6 +16,7 @@ let rValue, gValue, bValue;
 let rSlider,gSlider, bSlider;
 let waveformBandSpectrum;
 let createdColorSliders;
+let rainbowModeSelected;
 
 function setup(){
   createdColorSliders = false;
@@ -44,6 +45,16 @@ function draw(){
   colorSliders();
   background(0);
   stateScreens();
+}
+function checkForRainbow(){
+  if (rainbowModeSelected === false){
+    rValue = rSlider.value();
+    gValue = gSlider.value();
+    bValue = bSlider.value();
+  }
+  if (rainbowModeSelected){
+
+  }
 }
 
 function stateScreens(){
@@ -143,9 +154,6 @@ function playAudio(song){
   song.amp(volumeOfSong);
 
   if (semiState === 1){
-    rValue = rSlider.value();
-    gValue = gSlider.value();
-    bValue = bSlider.value();
     background(0);
     textAlign(LEFT);
     textSize(20);
@@ -156,9 +164,6 @@ function playAudio(song){
 
   }
   if (semiState === 2){
-    rValue = rSlider.value();
-    gValue = gSlider.value();
-    bValue = bSlider.value();
     fill(200);
     ellipse(200,600,50);
     fill(50);
