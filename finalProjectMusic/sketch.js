@@ -13,10 +13,15 @@ let fft;
 let spectrum;
 let canvas, canvasIsCreated;
 let rValue, gValue, bValue;
+let rSlider,gSlider, bSlider;
+let waveformBandSpectrum;
+let createdColorSliders;
+
 function setup(){
-  rValue = random(255);
-  gValue = random(255);
-  bValue = random(255);
+  createdColorSliders = false;
+  rValue = 0;
+  gValue = 255;
+  bValue = 0;
   canvasIsCreated = true;
   fft = new p5.FFT();
   semiState = 1;
@@ -36,6 +41,7 @@ function preload(){
 }
 
 function draw(){
+  colorSliders();
   background(0);
   stateScreens();
 }
@@ -137,17 +143,23 @@ function playAudio(song){
   song.amp(volumeOfSong);
 
   if (semiState === 1){
+    rValue = rSlider.value();
+    gValue = gSlider.value();
+    bValue = bSlider.value();
     background(0);
     textAlign(LEFT);
     textSize(20);
-    fill(rValue,gValue,bValue);
+    fill(200);
     ellipse(200,600,50);
     fill(50);
     triangle(187.5,583.3,220,600,187.5,616.7);
 
   }
   if (semiState === 2){
-    fill(rValue,gValue,bValue);
+    rValue = rSlider.value();
+    gValue = gSlider.value();
+    bValue = bSlider.value();
+    fill(200);
     ellipse(200,600,50);
     fill(50);
     rectMode(CENTER);
@@ -158,8 +170,7 @@ function playAudio(song){
 }
 
 function visualize(song){
-
-  spectrum = fft.analyze();
+  spectrum = fft.analyze(2048);
   for (let i = 0; i < spectrum.length; i++){
     let amp = spectrum[i];
     let y = map(amp,0,256,height-400,0);
@@ -255,9 +266,18 @@ function volumeSlider(){
 }
 
 function colorSliders(){
-  
-}
+  if (createdColorSliders === false){
+    rSlider = createSlider(0,255,0,0);
+    rSlider.position(400,700);
 
-function reloadProgram(){
-  window.location.reload(true);
+    gSlider = createSlider(0,255,255,0);
+    gSlider.position(400,725);
+
+
+    bSlider = createSlider(0,255,0,0);
+    bSlider.position(400,750);
+
+    createdColorSliders = true;
+  }
+
 }
