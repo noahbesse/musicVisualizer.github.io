@@ -46,16 +46,14 @@ function draw(){
   background(0);
   stateScreens();
 }
-function checkForRainbow(){
-  if (rainbowModeSelected === false){
-    rValue = rSlider.value();
-    gValue = gSlider.value();
-    bValue = bSlider.value();
-  }
-  if (rainbowModeSelected){
-
-  }
-}
+// function checkForRainbow(){
+//   if (rainbowModeSelected === false){
+//
+//   }
+// if (rainbowModeSelected){
+//
+// }
+//}
 
 function stateScreens(){
   if (state === 1 /*Welcome Screen*/){
@@ -152,11 +150,24 @@ function dropFile(file){
 
 function playAudio(song){
   song.amp(volumeOfSong);
+  rValue = rSlider.value();
+  gValue = gSlider.value();
+  bValue = bSlider.value();
+  fill(rValue,gValue,bValue);
+  strokeWeight(10);
+  line(0,500,song.currentTime(),500);
+  strokeWeight(1);
 
   if (semiState === 1){
     background(0);
     textAlign(LEFT);
     textSize(20);
+    fill(255,0,0);
+    /*red square*/rect(150,710,10,10);
+    fill(0,255,0);
+    /*green square*/rect(150,735,10,10);
+    fill(0,0,255);
+    /*blue square*/rect(150,760,10,10);
     fill(200);
     ellipse(200,600,50);
     fill(50);
@@ -164,6 +175,12 @@ function playAudio(song){
 
   }
   if (semiState === 2){
+    fill(255,0,0);
+    /*red square*/rect(150,710,10,10);
+    fill(0,255,0);
+    /*green square*/rect(150,735,10,10);
+    fill(0,0,255);
+    /*blue square*/rect(150,760,10,10);
     fill(200);
     ellipse(200,600,50);
     fill(50);
@@ -175,7 +192,7 @@ function playAudio(song){
 }
 
 function visualize(song){
-  spectrum = fft.analyze(2048);
+  spectrum = fft.analyze(4096);
   for (let i = 0; i < spectrum.length; i++){
     let amp = spectrum[i];
     let y = map(amp,0,256,height-400,0);
@@ -183,6 +200,7 @@ function visualize(song){
     line(i + 397,height-400,i+397,y);
     line(403 - i,height-400,403 - i,y);
   }
+
 }
 
 function mousePressed(){
