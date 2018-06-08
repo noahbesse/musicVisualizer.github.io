@@ -17,6 +17,7 @@ let rSlider,gSlider, bSlider;
 let waveformBandSpectrum;
 let createdColorSliders;
 let rainbowModeSelected;
+let currentSongTime;
 
 function setup(){
   createdColorSliders = false;
@@ -31,6 +32,7 @@ function setup(){
   canvas = createCanvas(800, 800);
   canvas.position(windowWidth/4, 0);
 }
+
 function preload(){
   testSong1 = loadSound("assets/testSong1.wav");
   testSong1Thumbnail = loadImage("assets/5hoursThumbnail.jpg");
@@ -42,18 +44,9 @@ function preload(){
 }
 
 function draw(){
-  colorSliders();
   background(0);
   stateScreens();
 }
-// function checkForRainbow(){
-//   if (rainbowModeSelected === false){
-//
-//   }
-// if (rainbowModeSelected){
-//
-// }
-//}
 
 function stateScreens(){
   if (state === 1 /*Welcome Screen*/){
@@ -149,13 +142,16 @@ function dropFile(file){
 }
 
 function playAudio(song){
+  colorSliders();
   song.amp(volumeOfSong);
   rValue = rSlider.value();
   gValue = gSlider.value();
   bValue = bSlider.value();
+  let x2 = map(song.currentTime(),0,song.duration(),0,width,true);
   fill(rValue,gValue,bValue);
   strokeWeight(10);
-  line(0,500,song.currentTime(),500);
+  line(0,500,x2,500);
+  ellipse(x2,500,10);
   strokeWeight(1);
 
   if (semiState === 1){
