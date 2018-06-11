@@ -142,6 +142,10 @@ function dropFile(file){
 }
 
 function playAudio(song){
+  let timer = width/song.duration();
+  if (mouseY > 490 && mouseY < 510 && mouseX < 800 && mouseX > 0 && mouseIsPressed){
+    song.jump(mouseX/timer);
+  }
   colorSliders();
   song.amp(volumeOfSong);
   rValue = rSlider.value();
@@ -154,11 +158,13 @@ function playAudio(song){
   ellipse(x2,500,10);
   strokeWeight(1);
 
+
   if (semiState === 1){
     background(0);
     textAlign(LEFT);
     textSize(20);
     fill(255,0,0);
+
     /*red square*/rect(150,710,10,10);
     fill(0,255,0);
     /*green square*/rect(150,735,10,10);
